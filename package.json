@@ -1,0 +1,45 @@
+{
+  "name": "salesforce-bot",
+  "version": "0.0.1",
+  "description": "An example salesforce bot for glip",
+  "author": "Pawan Venugopal",
+  "contributors": [
+    {
+      "name": "Pawan Venugopal",
+      "email": "pawan.venugopal@ringcentral.com"
+    }
+  ],
+  "bin": {
+    "module-name": "./bin/module-name"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pkevu/salesforce-bot"
+  },
+  "bugs": {
+    "url": "https://github.com/pkvenu/salesforce-bot/issues"
+  },
+  "keywords": [
+    "salesforce",
+    "botkit",
+    "chatbot"
+  ],
+  "dependencies": {
+    "botkit": "git://github.com/pkvenu/botkit#master",
+    "botkit-storage-redis": "^1.1.0",
+    "dotenv": "^4.0.0",
+    "http": "0.0.0",
+    "nforce": "^1.7.0",
+    "os": "^0.1.1",
+    "redis": "^2.7.1",
+    "request": "^2.81.0",
+    "url": "^0.11.0"
+  },
+  "preferGlobal": true,
+  "private": true,
+  "license": "MIT"
+}

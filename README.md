@@ -48,15 +48,10 @@ salesforce: create case
 
 ```bash
 $ npm install  
-$ npm start
 ```
 
-## Usage
-
-*Note: This document assumes that you are familiarized with Botkit and RingCentral API*
-
- First, create a copy of env.template file and rename it to .env. Configure the below values properties:
-
+First, create a copy of env.template file and rename it to .env. Configure the properties in the file:
+```
 * `GLIP_SERVER`: Glip server (sandbox: https://platform.devtest.ringcentral.com or production: https://platform.ringcentral.com)
 * `GLIP_APPKEY`: Application Key 
 * `GLIP_APPSECRET`: Application Secret
@@ -67,6 +62,16 @@ $ npm start
 * `SF_CLIENT_SECRET`: Salesforce ClientSecret
 * `SF_USER_NAME`: Salesforce Username
 * `SF_PASSWORD`: Salesforce Password
+```
+
+Run the command in the terminal to launch the bot.
+```
+$ npm start
+```
+
+## Details
+
+*Note: This document assumes that you are familiarized with Botkit and RingCentral API*
 
 ```js
 

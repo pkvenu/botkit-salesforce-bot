@@ -5,14 +5,12 @@ require('dotenv').config();
 var Botkit = require('botkit'),
     os = require('os'),
     url = require('url'),
-   // redisURL = process.env.REDIS_URL || "redis://127.0.0.1:6739",
-   // redis_storage = require('botkit-storage-redis'),
     http = require('http'),
     request = require('request'),
     formatter = require('./modules/glip-formatter'),
     salesforce = require('./modules/salesforce');
 
-//var redis_store = new redis_storage({url: redisURL});
+
 
 var controller = Botkit.glipbot({
     debug: false,
@@ -26,16 +24,7 @@ var bot = controller.spawn({
     username: process.env.GLIP_USERNAME,
     password: process.env.GLIP_PASSWORD,
     extension: process.env.GLIP_EXTENSION,
-}).startRTM(function (err) {
-    // bot.startConversation(message,function(err,convo) {
-    //     if(err){
-    //         console.log(err);
-    //     }else{
-    //         convo.say('I am a bot that has just joined your team');
-    //         convo.say('You must now /invite me to a channel so that I can be of use!');
-    //     }
-    // });
-});
+}).startRTM();
 
 controller.setupWebserver(process.env.port || 3000, function(err, webserver){
     webserver.get('/', function (req ,res) {
@@ -44,49 +33,7 @@ controller.setupWebserver(process.env.port || 3000, function(err, webserver){
     controller.createWebhookEndpoints(webserver, bot);
 });
 
-// var _bots ={};
-// function trackBot(bot) {
-//     _bots[bot.config.token] = bot;
-// }
 
-// controller.on('create_bot', function(bot,config){
-//     if(_bots[bot.config.token]){
-//         console.log('Already Online')
-//     }else {
-//         bot.startRTM(function(err){
-//             if(!err){
-//                 trackBot(bot);
-//             }
-//
-//             bot.startConversation(message,function(err,convo) {
-//                 if(err){
-//                     console.log(err);
-//                 }else{
-//                     convo.say('I am a bot that has just joined your team');
-//                     convo.say('You must now /invite me to a channel so that I can be of use!');
-//                 }
-//             })
-//         })
-//     }
-// });
-//
-// controller.storage.teams.all(function (err, teams) {
-//     if(err){
-//         throw new Error(err);
-//     }
-//
-//     for(var t in teams){
-//         if(teams[t].bot){
-//             var bot = controller.spawn(teams[t]).startRTM(function (err) {
-//                 if(err){
-//                     console.log('Error connecting bot to Slack:', err)
-//                 }else{
-//                     trackBot(bot);
-//                 }
-//             })
-//         }
-//     }
-// })
 
 
 controller.hears(['salesforce: search account (.*)', 'salesforce: search (.*) in accounts'], 'message_received', function (bot, message) {

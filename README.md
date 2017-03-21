@@ -70,8 +70,11 @@ $ npm start
 
 ```js
 
-var Botkit = require('./lib/Botkit.js'),
+require('dotenv').config();
+
+var Botkit = require('botkit'),
     os = require('os'),
+    url = require('url'),
     http = require('http'),
     request = require('request'),
     formatter = require('./modules/glip-formatter'),
@@ -111,28 +114,22 @@ controller.setupWebserver(process.env.PORT, function (err, webserver) {
 And finally, you can setup listeners for specific messages, like you would in any other `botkit` bot:
 
 ```js
-controller.hears(['salesforce: search account (.*)', 'search (.*) in accounts'], 'message_received', function (bot, message) {
+controller.hears(['salesforce: search account (.*)', 'salesforce: search (.*) in accounts'], 'message_received', function (bot, message) {
     var name = message.match[1];
     salesforce.findAccount(name).then(function (accounts) {
         console.log(JSON.stringify(accounts));
         if(accounts && accounts.length > 0){
             var data = null;
-            data = "I found these accounts matching  '" + name + "':"
+            data = "I found these accounts matching  '" + name + "':\n\n"
             accounts.forEach(function (account) {
-                data += '{{-{{div markdown="1" style="border-left: 4px solid #009cdb; padding: 5px 0px 0px 10px;"}}-}}'
-                data += "**Name**"
-                data += "\n" + account.get("Name")
-                data += "\n"
-                data += "\n**Link**"
-                data += "\nhttps://login.salesforce.com/" + account.getId()
-                data += "\n"
-                data += "\n**Phone**"
-                data += "\n" + account.get("Phone")
-                data += "\n"
-                data += "\n**Address**"
-                data += "\n" + account.get("BillingStreet") + ", " + account.get("BillingCity") + " " + account.get("BillingState")
-                data += '{{-{{div style="clear: both; margin-bottom:20px"}}-}} {{-{{/div}}-}} {{-{{/div}}-}}'
-
+                data += "**Name** \n\n"
+                data +=  account.get("Name") + "\n\n"
+                data += "**Link**"
+                data += "https://login.salesforce.com/" + account.getId() + "\n\n"
+                data += "**Phone**"
+                data += account.get("Phone") + "\n\n"
+                data += "**Address**"
+                data += account.get("BillingStreet") + ", " + account.get("BillingCity") + " " + account.get("BillingState") + "\n\n"
             })
             bot.reply(message, data);
         } else {
